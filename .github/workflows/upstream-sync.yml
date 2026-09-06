@@ -1,0 +1,59 @@
+name: Upstream sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 4 * * 1'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure remotes
+        shell: bash
+        run: |
+          git remote set-url origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git remote remove upstream 2>/dev/null || true
+          git remote add upstream https://github.com/VrushankPatel/godseye.git
+          git fetch --prune origin
+          git fetch --prune upstream master
+
+      - name: Verify upstream safety and fast-forward master
+        shell: bash
+        run: |
+          if ! git merge-base --is-ancestor origin/master upstream/master; then
+            echo "origin/master has diverged from upstream/master; refusing to continue."
+            exit 1
+          fi
+          git switch --detach origin/master
+          git merge --ff-only upstream/master
+          git push origin HEAD:master
+
+      - name: Create sync branch from current dev
+        id: branch
+        shell: bash
+        run: |
+          branch="chore/upstream-sync-${GITHUB_RUN_ID}"
+          git switch --detach origin/dev
+          git switch -c "$branch"
+          git merge --no-ff --no-edit origin/master
+          git push --set-upstream origin "$branch"
+          echo "name=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Open pull request to dev
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create --base dev --head "${{ steps.branch.outputs.name }}" \
+            --title "chore: sync upstream master" \
+            --body "Automated upstream sync. Review CI and merge manually; this workflow never merges automatically."
