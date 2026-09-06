@@ -28,6 +28,11 @@ body {
   overflow: hidden;
 }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .godseye-app {
   --immersive-left-top-clearance: calc(max(20px, env(safe-area-inset-top)) + 92px);
   --immersive-right-top-clearance: calc(max(20px, env(safe-area-inset-top)) + 176px);

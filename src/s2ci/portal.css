@@ -1,0 +1,96 @@
+.ci-portal {
+    --ci-ink: #09131a;
+    --ci-surface: #0f2028;
+    --ci-surface-raised: #142b34;
+    --ci-line: rgba(132, 194, 190, 0.18);
+    --ci-muted: #8aa2a4;
+    --ci-text: #e8f1ec;
+    --ci-cyan: #6dd8d0;
+    --ci-green: #a6d983;
+    display: flex;
+    min-height: 100vh;
+    background: radial-gradient(circle at 78% 12%, rgba(50, 121, 117, 0.2), transparent 30%), linear-gradient(135deg, #09131a 0%, #10242b 58%, #0c1a22 100%);
+    color: var(--ci-text);
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    overflow: hidden;
+}
+
+.ci-sidebar {
+    width: 272px;
+    min-height: 100vh;
+    padding: 28px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--ci-line);
+    background: rgba(5, 15, 21, 0.68);
+    flex-shrink: 0;
+}
+
+.ci-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ci-text);
+    text-decoration: none;
+    margin: 0 10px 42px;
+}
+
+.ci-brand-mark {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--ci-cyan);
+    color: var(--ci-cyan);
+    font: 700 13px/1 "Courier New", monospace;
+    letter-spacing: 1px;
+}
+
+.ci-brand strong, .ci-brand small { display: block; }
+.ci-brand strong { font-size: 13px; letter-spacing: 2px; }
+.ci-brand small { margin-top: 5px; color: var(--ci-muted); font-size: 11px; }
+.ci-sidebar-label, .ci-panel-kicker, .ci-eyebrow { color: var(--ci-cyan); font: 600 10px/1.4 "Courier New", monospace; letter-spacing: 1.8px; text-transform: uppercase; }
+.ci-sidebar-label { padding: 0 12px 12px; }
+.ci-nav { display: grid; gap: 2px; }
+.ci-nav-link { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-left: 2px solid transparent; color: var(--ci-muted); font-size: 13px; text-decoration: none; transition: background 180ms ease, color 180ms ease, border-color 180ms ease; }
+.ci-nav-link:hover, .ci-nav-link.is-active { color: var(--ci-text); background: rgba(109, 216, 208, 0.08); border-left-color: var(--ci-cyan); }
+.ci-nav-indicator { width: 5px; height: 5px; border: 1px solid currentColor; border-radius: 50%; }
+.ci-nav-link.is-active .ci-nav-indicator { background: var(--ci-cyan); box-shadow: 0 0 10px rgba(109, 216, 208, 0.8); }
+.ci-sidebar-footer { display: flex; align-items: center; gap: 8px; margin: auto 12px 0; color: var(--ci-muted); font: 11px "Courier New", monospace; }
+.ci-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ci-green); box-shadow: 0 0 10px rgba(166, 217, 131, 0.7); }
+.ci-main { flex: 1; min-width: 0; min-height: 100vh; overflow: auto; }
+.ci-page { max-width: 1120px; padding: clamp(42px, 8vw, 108px) clamp(24px, 7vw, 96px); animation: ci-rise 420ms ease both; }
+.ci-page-header { max-width: 680px; }
+.ci-page h1 { margin: 12px 0 16px; color: var(--ci-text); font-size: clamp(34px, 5vw, 62px); font-weight: 400; letter-spacing: 0; line-height: 1; }
+.ci-page-intro, .ci-panel p, .ci-empty-state p { color: var(--ci-muted); font-size: 15px; line-height: 1.7; }
+.ci-command-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 72px; }
+.ci-panel { min-height: 248px; padding: 28px; border: 1px solid var(--ci-line); background: rgba(15, 32, 40, 0.72); }
+.ci-panel--primary { border-color: rgba(109, 216, 208, 0.45); background: linear-gradient(140deg, rgba(22, 65, 69, 0.76), rgba(15, 32, 40, 0.82)); }
+.ci-panel h2 { margin: 30px 0 12px; font-size: 23px; font-weight: 400; }
+.ci-action, .ci-text-link { display: inline-flex; gap: 10px; margin-top: 28px; color: var(--ci-cyan); font-size: 13px; text-decoration: none; }
+.ci-action:hover, .ci-text-link:hover { color: var(--ci-green); }
+.ci-panel-note { display: block; margin-top: 36px; color: var(--ci-muted); font: 11px "Courier New", monospace; }
+.ci-placeholder { max-width: 760px; }
+.ci-empty-state { margin-top: 70px; padding: 34px 0; border-top: 1px solid var(--ci-line); }
+.ci-empty-line { display: block; width: 54px; height: 2px; background: var(--ci-green); }
+.ci-empty-state h2 { margin: 24px 0 10px; font-size: 24px; font-weight: 400; }
+.ci-godseye-route { position: relative; width: 100%; height: 100vh; }
+.ci-godseye-route .godseye-app { position: absolute !important; inset: 0; }
+.ci-return-link { position: absolute; z-index: 20; top: 18px; left: 18px; padding: 8px 11px; border: 1px solid rgba(109, 216, 208, 0.45); background: rgba(9, 19, 26, 0.8); color: var(--ci-cyan); font: 11px "Courier New", monospace; text-decoration: none; }
+.ci-return-link:hover { color: var(--ci-green); border-color: var(--ci-green); }
+@keyframes ci-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) {
+    .ci-portal { display: block; overflow: auto; }
+    .ci-sidebar { width: 100%; min-height: auto; padding: 16px 14px 12px; border-right: 0; border-bottom: 1px solid var(--ci-line); }
+    .ci-brand { margin: 0 6px 20px; }
+    .ci-sidebar-label { padding: 0 6px 8px; }
+    .ci-nav { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
+    .ci-nav-link { min-width: max-content; padding: 9px 10px; border-left: 0; border-bottom: 2px solid transparent; font-size: 12px; }
+    .ci-nav-link:hover, .ci-nav-link.is-active { border-bottom-color: var(--ci-cyan); border-left-color: transparent; }
+    .ci-sidebar-footer { display: none; }
+    .ci-main { min-height: calc(100vh - 150px); }
+    .ci-page { padding: 44px 22px 64px; }
+    .ci-page h1 { font-size: 42px; }
+    .ci-command-grid { grid-template-columns: 1fr; margin-top: 44px; }
+    .ci-panel { min-height: auto; }
+}
